@@ -1,2 +1,6 @@
 *.jpg
 *.png
+result/
+input/
+Dataset/
+.DS_Store
