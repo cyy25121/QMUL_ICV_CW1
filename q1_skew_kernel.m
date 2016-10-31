@@ -1,13 +1,13 @@
-function [map, mapped, mapImg, output1, output2, output3] = q1_rotate_kernel(input, angle)
+function [map, mapped, mapImg, output1] = q1_skew_kernel(input, angle)
 %% Initial
     inputS = size(input);
     bd = [0 inputS(1) inputS(1) 0; 0 0 inputS(2) inputS(2)];
     
 %% Make rotate matrix
-    rM = ro(angle);
+    sM = skew(angle);
     
 %% Compute new boundary
-    nbd = rM * bd;
+    nbd = sM * bd;
     nbd_x = round(max(nbd(1, :))-min(nbd(1, :)));
     nbd_y = round(max(nbd(2, :))-min(nbd(2, :)));
     shift_x = round(abs(min(nbd(1,:))));
@@ -20,7 +20,7 @@ function [map, mapped, mapImg, output1, output2, output3] = q1_rotate_kernel(inp
     outImg = uint8(zeros(nbd_x, nbd_y, 3));
     for i=1:size(input, 1)
         for j=1:size(input, 2)
-            newPoint = round(rM * [i; j]) + [shift_x; shift_y] ;
+            newPoint = round(sM * [i; j] + [shift_x; shift_y]);
             if(newPoint(1) >= 1 && newPoint(2) >= 1 && newPoint(1) <= nbd_x && newPoint(2) <= nbd_y)
                 map = map + 1;
                 mappedM(newPoint(1), newPoint(2)) = 1;
@@ -31,7 +31,9 @@ function [map, mapped, mapImg, output1, output2, output3] = q1_rotate_kernel(inp
     end
     mapped = sum(sum(mappedM));
     output1 = outImg;
-    
+    output2 = output1;
+    output3 = output1;
+%{    
 %% Interpolation - NN    
 
     output2 = output1;
@@ -56,4 +58,5 @@ function [map, mapped, mapImg, output1, output2, output3] = q1_rotate_kernel(inp
             end
         end
     end
+%}
 end
