@@ -50,7 +50,6 @@ function [map, mapped, mapImg, output1, output2, output3] = q1_rotate_kernel(inp
     for new_x=1:nbd_x
         for new_y=1:nbd_y
             ori = round(rM \ ([new_x; new_y]  - [shift_x; shift_y]));
-            % newPoint = round(rM * [i; j]) + [shift_x; shift_y] ;
             if((ori(1) >= 1 ) && (ori(2) >= 1 ) && (ori(1) <= inputS(1)) && (ori(2) <= inputS(2))) 
                 output3(new_x, new_y, :) = input(ori(1), ori(2), :);
             end

@@ -1,8 +1,8 @@
 %% Read data
 disp('Intorduction of Computer Vision Coursework 1 - Q1: Transformation');
 figure(1);
-input = imread('input/myname.jpg');
 %input = imread('input/myname.jpg');
+input = imread('Dataset/DatasetA/car-1.jpg');
 image(input);
 i=1;
 %% Rotate
@@ -10,14 +10,18 @@ angles = [30 60 120 -50];
 for ang = angles
     figure(i)
     [m1, m2, mapImg, outImg1, outImg2, outImg3]  = q1_rotate_kernel(input, ang);
-    subplot(1,4,1);
+    subplot(2,2,1);
     imshow(mapImg);
-    subplot(1,4,2);
+    title('Unmapping Matrix');
+    subplot(2,2,2);
     imshow(outImg1);
-    subplot(1,4,3);
+    title('Directly rotate');
+    subplot(2,2,3);
     imshow(outImg2);
-    subplot(1,4,4);
+    title('Directly rotate with NN');
+    subplot(2,2,4);
     imshow(outImg3);
+    title('Inverse mapping');
     i=i+1;
 end
 %% Skew
