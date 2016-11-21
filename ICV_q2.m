@@ -1,8 +1,11 @@
 %% Read Data
 disp('Intorduction of Computer Vision Coursework 1 - Q1: Transformation');
-input = imread('Dataset/DatasetA/face-3.jpg');
+clc; clear;
+input = imread('Dataset/DatasetA/car-1.jpg');
+%input = imread('input/myname.jpg');
+input_gray = input(:,:,1) * 0.299 + input(:,:,2) * 0.587 + input(:,:,3) * 0.114;
 figure
-imshow(input);
+imshow(input_gray);
 
 %% a) Mean filter
 % In this practice, I don't handle the border.
@@ -10,54 +13,54 @@ imshow(input);
 % The 3*3 matrix of mean filter 
 meanM = [1/9 1/9 1/9; 1/9 1/9 1/9; 1/9 1/9 1/9];
 figure
-outImg = q2_33filter(input, meanM);
+outImg = ICV_q2_33filter(input_gray, meanM);
 imshow(outImg);
 
 %% b1) other filters
 
-kernel1 = [1/16 2/16 1/16; 2/16 4/16 2/16; 1/16 2/16 1/16];
+kernelA = [1 2 1; 2 4 2; 1 2 1] / 16;
 figure
-outImg = q2_33filter(input, kernel1);
+outImg = ICV_q2_33filter(input_gray, kernelA);
 imshow(outImg);
 
 %% b2) other filters
 
-kernel2 = [0 1 0; 1 -4 1; 0 1 0];
+kernelB = [0 1 0; 1 -4 1; 0 1 0];
 figure
-outImg = q2_33filter(input, kernel2);
+outImg = ICV_q2_33filter(input_gray, kernelB);
 imshow(outImg);
 
 %% c1) A followed by A
 
 figure
-outImg = q2_33filter(input, kernel1);
-outImg = q2_33filter(outImg, kernel1);
+outImg = ICV_q2_33filter(input_gray, kernelA);
+outImg = ICV_q2_33filter(outImg, kernelA);
 imshow(outImg);
 
 %% c2) A followed by B
 
 figure
-outImg = q2_33filter(input, kernel1);
-outImg = q2_33filter(outImg, kernel2);
+outImg = ICV_q2_33filter(input_gray, kernelA);
+outImg = ICV_q2_33filter(outImg, kernelB);
 imshow(outImg);
 
 %% c3) B followed by A
 
 figure
-outImg = q2_33filter(input, kernel2);
-outImg = q2_33filter(outImg, kernel1);
+outImg = ICV_q2_33filter(input_gray, kernelB);
+outImg = ICV_q2_33filter(outImg, kernelA);
 imshow(outImg);
 
 %% d1)
 
 figure 
 kernelA_77 = [1 2 4 8 4 2 1; 2 4 8 16 8 4 2; 4 8 16 32 16 8 4; 8 16 32 64 32 16 8; 4 8 16 32 16 8 4; 2 4 8 16 8 4 2; 1 2 4 8 4 2 1] * 1/484;
-outImg = q2_77filter(input, kernelA_77);
+outImg = ICV_q2_77filter(input_gray, kernelA_77);
 imshow(outImg);
 
 %% d2)
 
 figure
 kernelB_77 = [0 0 0 1 0 0 0; 0 0 0 1 0 0 0; 0 0 0 1 0 0 0; 1 1 1 -12 1 1 1; 0 0 0 1 0 0 0; 0 0 0 1 0 0 0; 0 0 0 1 0 0 0];
-outImg = q2_77filter(input, kernelB_77);
+outImg = ICV_q2_77filter(input_gray, kernelB_77);
 imshow(outImg);

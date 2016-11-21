@@ -1,10 +1,10 @@
-function [map, mapped, mapImg, output1, output2, output3] = q1_rotate_kernel(input, angle)
+function [map, mapped, mapImg, output1, output2, output3] = ICV_q1_rotate_kernel(input, angle)
 %% Initial
     inputS = size(input);
     bd = [0 inputS(1) inputS(1) 0; 0 0 inputS(2) inputS(2)];
     
 %% Make rotate matrix
-    rM = ro(angle);
+    rM = ICV_ro(-angle);
     
 %% Compute new boundary
     nbd = rM * bd;
